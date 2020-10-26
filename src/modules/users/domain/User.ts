@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 import { nanoid } from 'nanoid';
 import validator from 'validator';
 import { Result } from '../../../common/core/Result';
+import { StringUtils } from '../../../common/util/StringUtils';
 import { IUser, IUserProps } from './IUser';
 import * as UserErrors from './UserErrors';
 
@@ -29,11 +30,12 @@ export class User implements IUser {
     },
     uuid?: string
   ): Promise<Result<IUser>> {
-    if (!validator.isEmail(props.email)) {
+    if (!StringUtils.isString(props.email) || !validator.isEmail(props.email)) {
       return new UserErrors.InvalidEmailError(props.email);
     }
 
     if (
+      !StringUtils.isString(props.email) ||
       props.username.length < 3 ||
       props.username.length > 20 ||
       validator.contains(props.username, ' ') ||
@@ -42,7 +44,7 @@ export class User implements IUser {
       return new UserErrors.InvalidUsernameError(props.username);
     }
 
-    if (props.password.length < 8) {
+    if (!StringUtils.isString(props.email) || props.password.length < 8) {
       return new UserErrors.InvalidPasswordError();
     }
 
