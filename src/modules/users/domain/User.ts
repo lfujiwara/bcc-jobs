@@ -63,7 +63,7 @@ export class User implements IUser {
     return await bcrypt.hash(password, await bcrypt.genSalt());
   }
 
-  updateEmail(newEmail: string) {
+  async updateEmail(newEmail: string) {
     this.email = newEmail;
   }
 
