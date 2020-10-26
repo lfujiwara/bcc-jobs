@@ -35,7 +35,7 @@ export class User implements IUser {
     }
 
     if (
-      !StringUtils.isString(props.email) ||
+      !StringUtils.isString(props.username) ||
       props.username.length < 3 ||
       props.username.length > 20 ||
       validator.contains(props.username, ' ') ||
@@ -44,7 +44,7 @@ export class User implements IUser {
       return new UserErrors.InvalidUsernameError(props.username);
     }
 
-    if (!StringUtils.isString(props.email) || props.password.length < 8) {
+    if (!StringUtils.isString(props.password) || props.password.length < 8) {
       return new UserErrors.InvalidPasswordError();
     }
 
