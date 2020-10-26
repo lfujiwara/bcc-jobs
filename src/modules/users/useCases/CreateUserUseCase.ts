@@ -2,6 +2,7 @@ import { IUseCase } from '../../../common/core/IUseCase';
 import { Either, left, Result, right } from '../../../common/core/Result';
 import { IUser } from '../domain/IUser';
 import { User } from '../domain/User';
+import * as UserErrors from '../domain/UserErrors';
 import { IUserRepository } from '../repositories/IUserRepository';
 
 export interface CreateUserDTO {
@@ -11,6 +12,8 @@ export interface CreateUserDTO {
 }
 
 type Response = Either<Result<any>, Result<IUser>>;
+
+export const CreateUserUseCaseErrors = { ...UserErrors };
 
 export class CreateUserUseCase
   implements IUseCase<CreateUserDTO, Promise<Response>> {
