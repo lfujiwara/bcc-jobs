@@ -3,11 +3,7 @@ import { nanoid } from 'nanoid';
 import validator from 'validator';
 import { Result } from '../../../common/core/Result';
 import { IUser, IUserProps } from './IUser';
-import {
-  InvalidEmailError,
-  InvalidPasswordError,
-  InvalidUsernameError,
-} from './UserErrors';
+import * as UserErrors from './UserErrors';
 
 export class User implements IUser {
   uuid: string;
@@ -34,7 +30,7 @@ export class User implements IUser {
     uuid?: string
   ): Promise<Result<IUser>> {
     if (!validator.isEmail(props.email)) {
-      return new InvalidEmailError(props.email);
+      return new UserErrors.InvalidEmailError(props.email);
     }
 
     if (
@@ -43,11 +39,11 @@ export class User implements IUser {
       validator.contains(props.username, ' ') ||
       !validator.isAscii(props.username)
     ) {
-      return new InvalidUsernameError(props.username);
+      return new UserErrors.InvalidUsernameError(props.username);
     }
 
     if (props.password.length < 8) {
-      return new InvalidPasswordError();
+      return new UserErrors.InvalidPasswordError();
     }
 
     const user = new User(
