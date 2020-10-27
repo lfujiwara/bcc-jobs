@@ -9,16 +9,26 @@ export class ConsoleRepository implements IUserRepository {
     this.users = [];
   }
 
+  private getUsers(): IUser[] {
+    return this.users;
+  }
+
   async save(user: IUser): Promise<Result<IUser>> {
-    this.users.push(user);
-    console.log(user);
+    const users = this.getUsers();
+    users.push(user);
     return Result.ok(user);
   }
 
   async findUserByEmail(email: string) {
-    const candidates = this.users.filter((u) => u.email === email);
+    const users = this.getUsers();
+    const candidates = users.filter((u) => u.email === email);
     return candidates.length > 0
       ? Result.ok<IUser>(candidates[0])
       : Result.fail<IUser>('Email is not assigned to any user');
+  }
+
+  async findAll() {
+    const users = this.getUsers();
+    return Result.ok(users);
   }
 }
