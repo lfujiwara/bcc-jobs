@@ -1,8 +1,8 @@
 {
   "verbose": true,
-  "ignore": ["*.test.ts"],
+  "ignore": ["*.test.ts", "*.spec.ts"],
   "execMap": {
-    "ts": "sucrase-node src/index.ts"
+    "ts": "sucrase-node"
   },
   "ext": "ts"
 }
