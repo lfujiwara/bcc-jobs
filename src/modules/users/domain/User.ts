@@ -6,6 +6,12 @@ import { StringUtils } from '../../../common/util/StringUtils';
 import { IUser, IUserProps } from './IUser';
 import * as UserErrors from './UserErrors';
 
+export namespace UserTypes {
+  export type CreateUser = Omit<Omit<IUserProps, 'uuid'>, 'passwordHash'> & {
+    password: string;
+  };
+}
+
 export class User implements IUser {
   uuid: string;
   email: string;
@@ -25,9 +31,7 @@ export class User implements IUser {
   }
 
   public static async create(
-    props: Omit<Omit<IUserProps, 'uuid'>, 'passwordHash'> & {
-      password: string;
-    },
+    props: UserTypes.CreateUser,
     uuid?: string
   ): Promise<Result<IUser>> {
     if (!StringUtils.isString(props.email) || !validator.isEmail(props.email)) {
