@@ -50,7 +50,7 @@ export class Result<T> {
 
     this.isSuccess = isSuccess;
     this.isFailure = !isSuccess;
-    this.error = null;
+    this.error = error || null;
     this._value = value;
 
     Object.freeze(this);
